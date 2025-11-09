@@ -44,6 +44,7 @@ class NavItem(TypedDict):
 class InventoryState(rx.State):
     """Manages the state for the inventory management system."""
 
+    sidebar_collapsed: bool = False
     current_page: str = "Portfolio"
     portfolio_search: str = ""
     inflow_search: str = ""
@@ -174,6 +175,11 @@ class InventoryState(rx.State):
             logging.exception(
                 f"An unexpected error occurred while loading Excel data: {e}"
             )
+
+    @rx.event
+    def toggle_sidebar(self):
+        """Toggles the collapsed state of the sidebar."""
+        self.sidebar_collapsed = not self.sidebar_collapsed
 
     @rx.event
     def set_page(self, page_name: str):
